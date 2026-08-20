@@ -1,6 +1,10 @@
 function AppointmentCard({
   id,
   patientName,
+  patientEmail,
+  patientPhone,
+  patientBloodGroup,
+  patientAge,
   doctorName,
   date,
   timeSlot,
@@ -21,6 +25,22 @@ function AppointmentCard({
         <div className="appointment-item">
           <label>Patient</label>
           <span>{patientName || "Not Entered"}</span>
+        </div>
+        <div className="appointment-item">
+          <label>Email</label>
+          <span>{patientEmail || "Not Entered"}</span>
+        </div>
+        <div className="appointment-item">
+          <label>Phone</label>
+          <span>{patientPhone || "Not Entered"}</span>
+        </div>
+        <div className="appointment-item">
+          <label>Blood Group</label>
+          <span>{patientBloodGroup || "Not Selected"}</span>
+        </div>
+        <div className="appointment-item">
+          <label>Age</label>
+          <span>{patientAge === "" || patientAge == null ? "Not Entered" : patientAge}</span>
         </div>
         <div className="appointment-item">
           <label>Doctor</label>

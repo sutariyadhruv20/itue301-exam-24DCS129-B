@@ -33,7 +33,11 @@ app.get("/api/v1/appointments", async (req, res, next) => {
 
     const formattedAppointments = appointmentsList.map((appt) => ({
       id: appt._id,
-      patientName: appt.patientId ? appt.patientId.name : "Unknown Patient",
+      patientName: appt.patientName || (appt.patientId ? appt.patientId.name : "Unknown Patient"),
+      patientEmail: appt.patientEmail || (appt.patientId ? appt.patientId.email : ""),
+      patientPhone: appt.patientPhone || (appt.patientId ? appt.patientId.phone : ""),
+      patientBloodGroup: appt.patientBloodGroup || (appt.patientId ? appt.patientId.bloodGroup : ""),
+      patientAge: appt.patientAge ?? (appt.patientId ? appt.patientId.age : ""),
       doctorName: appt.doctorId ? appt.doctorId.name : "Unknown Doctor",
       date: appt.date,
       timeSlot: appt.timeSlot,
@@ -112,6 +116,11 @@ app.post("/api/v1/appointments", async (req, res, next) => {
 
     const appointment = await Appointment.create({
       patientId: patient._id,
+      patientName: patient.name,
+      patientEmail: patient.email,
+      patientPhone: patient.phone || "",
+      patientBloodGroup: patient.bloodGroup || "",
+      patientAge: patient.age ?? null,
       doctorId: doctor._id,
       date,
       timeSlot,
@@ -125,6 +134,10 @@ app.post("/api/v1/appointments", async (req, res, next) => {
       data: {
         id: appointment._id,
         patientName: patient.name,
+        patientEmail: patient.email,
+        patientPhone: patient.phone || "",
+        patientBloodGroup: patient.bloodGroup || "",
+        patientAge: patient.age || "",
         doctorName: doctor.name,
         date: appointment.date,
         timeSlot: appointment.timeSlot,

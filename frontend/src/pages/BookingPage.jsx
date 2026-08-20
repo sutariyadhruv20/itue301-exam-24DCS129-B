@@ -336,6 +336,10 @@ function BookingPage() {
             <span className="live-badge">Live Form Preview</span>
             <AppointmentCard
               patientName={form.patientName}
+              patientEmail={form.patientEmail}
+              patientPhone={form.patientPhone}
+              patientBloodGroup={form.patientBloodGroup}
+              patientAge={form.patientAge}
               doctorName={form.doctorName}
               date={form.date}
               timeSlot={form.timeSlot}
@@ -358,6 +362,10 @@ function BookingPage() {
                     key={appt.id || appt._id}
                     id={appt.id || appt._id}
                     patientName={appt.patientName}
+                    patientEmail={appt.patientEmail}
+                    patientPhone={appt.patientPhone}
+                    patientBloodGroup={appt.patientBloodGroup}
+                    patientAge={appt.patientAge}
                     doctorName={appt.doctorName}
                     date={appt.date}
                     timeSlot={appt.timeSlot}

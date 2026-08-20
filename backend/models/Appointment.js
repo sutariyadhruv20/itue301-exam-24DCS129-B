@@ -8,6 +8,40 @@ const appointmentSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Patient details are kept with the appointment as a booking snapshot.
+    // This makes each appointment self-contained in MongoDB.
+    patientName: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    patientEmail: {
+      type: String,
+      required: true,
+      trim: true,
+      lowercase: true,
+    },
+
+    patientPhone: {
+      type: String,
+      trim: true,
+      default: "",
+    },
+
+    patientBloodGroup: {
+      type: String,
+      enum: ["", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+      default: "",
+    },
+
+    patientAge: {
+      type: Number,
+      min: 0,
+      max: 150,
+      default: null,
+    },
+
     doctorId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Doctor",
