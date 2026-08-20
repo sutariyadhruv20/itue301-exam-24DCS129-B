@@ -55,6 +55,10 @@ app.post("/api/v1/appointments", async (req, res, next) => {
   try {
     const {
       patientName,
+      patientEmail,
+      patientPhone,
+      patientBloodGroup,
+      patientAge,
       doctorName,
       date,
       timeSlot,
@@ -62,10 +66,10 @@ app.post("/api/v1/appointments", async (req, res, next) => {
       reason = "",
     } = req.body;
 
-    if (!patientName || !doctorName || !date || !timeSlot) {
+    if (!patientName || !patientEmail || !doctorName || !date || !timeSlot) {
       return res.status(400).json({
         success: false,
-        message: "patientName, doctorName, date and timeSlot are required",
+        message: "patientName, patientEmail, doctorName, date and timeSlot are required",
       });
     }
 
@@ -84,16 +88,26 @@ app.post("/api/v1/appointments", async (req, res, next) => {
       });
     }
 
-    // Find patient by name (case-insensitive) or create
+    // Find patient by email (case-insensitive) or create
     let patient = await Patient.findOne({
-      name: { $regex: new RegExp("^" + patientName.trim() + "$", "i") },
+      email: { $regex: new RegExp("^" + patientEmail.trim() + "$", "i") },
     });
 
     if (!patient) {
       patient = await Patient.create({
         name: patientName.trim(),
-        email: `${patientName.trim().toLowerCase().replace(/\s+/g, "")}_${Date.now()}@example.com`,
+        email: patientEmail.trim(),
+        phone: patientPhone ? patientPhone.trim() : undefined,
+        bloodGroup: patientBloodGroup || undefined,
+        age: patientAge ? Number(patientAge) : undefined,
       });
+    } else {
+      // Update details if they are supplied
+      if (patientName) patient.name = patientName.trim();
+      if (patientPhone) patient.phone = patientPhone.trim();
+      if (patientBloodGroup) patient.bloodGroup = patientBloodGroup;
+      if (patientAge) patient.age = Number(patientAge);
+      await patient.save();
     }
 
     const appointment = await Appointment.create({

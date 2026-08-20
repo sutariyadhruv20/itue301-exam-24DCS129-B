@@ -5,6 +5,10 @@ function BookingPage() {
   // Task 2 - State management: form state
   const [form, setForm] = useState({
     patientName: "",
+    patientEmail: "",
+    patientPhone: "",
+    patientBloodGroup: "",
+    patientAge: "",
     doctorName: "",
     date: "",
     timeSlot: "",
@@ -100,6 +104,10 @@ function BookingPage() {
       // Reset form & selected doctor preview
       setForm({
         patientName: "",
+        patientEmail: "",
+        patientPhone: "",
+        patientBloodGroup: "",
+        patientAge: "",
         doctorName: "",
         date: "",
         timeSlot: "",
@@ -170,6 +178,64 @@ function BookingPage() {
                 value={form.patientName}
                 onChange={handleChange}
                 required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="patientEmail">Email Address</label>
+              <input
+                type="email"
+                id="patientEmail"
+                name="patientEmail"
+                className="form-input"
+                placeholder="Enter patient email"
+                value={form.patientEmail}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="patientPhone">Phone Number</label>
+              <input
+                type="tel"
+                id="patientPhone"
+                name="patientPhone"
+                className="form-input"
+                placeholder="Enter patient phone number"
+                value={form.patientPhone}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="patientBloodGroup">Blood Group</label>
+              <select
+                id="patientBloodGroup"
+                name="patientBloodGroup"
+                className="form-input"
+                value={form.patientBloodGroup}
+                onChange={handleChange}
+              >
+                <option value="">Select blood group</option>
+                {["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"].map((group) => (
+                  <option key={group} value={group}>{group}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="patientAge">Age</label>
+              <input
+                type="number"
+                id="patientAge"
+                name="patientAge"
+                className="form-input"
+                placeholder="Enter patient age"
+                min="0"
+                max="150"
+                value={form.patientAge}
+                onChange={handleChange}
               />
             </div>
 
